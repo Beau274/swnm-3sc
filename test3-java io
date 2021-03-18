@@ -1,0 +1,63 @@
+package test3;
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.util.Scanner;
+
+public class cmd1 {
+	public static void main(String[] args) throws IOException {
+		System.out.println("请输入：");
+		Scanner sc = new Scanner(System.in);
+		String filein=sc.nextLine();
+		String[] in = filein.split(" ");		
+		sc.close();
+		int n = 0;  //记录数据条数
+		String[] province = new String[500];
+        String[] city = new String[500];
+        String[] sum = new String[500];
+		try {
+	        File file_in = new File("D:\\\\" + in[0]);   
+	        Scanner sca = new Scanner(file_in);   	        
+		        for(int len = 0; sca.hasNext();len++) {
+		            province[len] = sca.next();
+		            city[len] = sca.next();
+		            sum[len] = sca.next();
+		            n++;
+		        }
+	        sca.close();
+		}catch(Exception e) {}
+		
+        //数据加工并输出	
+		try {			
+	        FileWriter pS =new FileWriter("D:\\\\" + in[1]);
+	        if (in.length<=2)  {
+		        String pro = "value"; //用pro记录上个province
+		        for(int i = 0; i < n; i++) {
+		            if (!pro.equals(province[i])) {
+		            	if (i != 0)	{
+		            	pS.write("\n");
+		            	}
+		            		pS.write(province[i] + "\t\n");
+		            		pro = province[i];
+		            }
+		            pS.write(city[i] + "\t" + sum[i] + "\n");
+		        }
+		        pS.flush();
+		        System.out.println("输出完成1");
+		        }
+			else {
+				String keypro = in[2];
+				pS.write(keypro+"\n");
+				for(int i=0; i<n; i++) {
+					if(keypro.equals(province[i])) {
+						pS.write(city[i] + "\t" + sum[i] + "\n");						 
+					}			
+				}
+				System.out.println("输出完成2");
+			}
+	        pS.close();
+		}catch(Exception e) {
+			e.printStackTrace();
+		 }	
+	 }	
+}
